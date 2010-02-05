@@ -60,23 +60,40 @@ public class VSessionGuard extends Widget implements Paintable {
           @Override
           public void run() {
             if (notification.isShowing()) {
-              if (minutesLeft > 0) {
+              
+              /*
+               * to make absolutely sure that we don't try to kill the session
+               * before the session is absolutely dead, count one minute extra.
+               */
+              if (minutesLeft >= 0) {
+                
                 // refresh the message with an updated minute-count
                 minutesLeft--;
                 updateMinutes(notification, minutesLeft);
+                
               } else {
-                // the session should have ended by now, so Vaadin should show a
-                // session timeout message when trying to update the component.
+                /*
+                 * the session should have ended by now (since we counted one
+                 * minute extra), so Vaadin should show a session timeout
+                 * message when trying to update the component.
+                 */
                 ping(true);
                 cancel();
                 notification.hide();
               }
+              
             } else {
+              
+              // the notification was hidden, so we'll count that as "activity";
+              // ping the session.
               cancel();
+              ping(true);
             }
           }
         }.scheduleRepeating(MINUTE);
+        
       } else {
+        // keepalive - ping!
         ping(true);
       }
     }
@@ -88,7 +105,8 @@ public class VSessionGuard extends Widget implements Paintable {
     }
     
     private String getXhtmlMessage(final String xhtmlMessage, final int minutes) {
-      return xhtmlMessage.replace("_", String.valueOf(minutes));
+      return xhtmlMessage.replace("_", String.valueOf(minutes >= 0 ? minutes
+          : 0));
     }
   };
   
