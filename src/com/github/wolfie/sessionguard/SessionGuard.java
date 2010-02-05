@@ -106,10 +106,12 @@ public class SessionGuard extends AbstractComponent {
   
   /**
    * <p>
-   * Set the time at which a session timeout warning will be presented.
+   * The amount of time left in the session lifetime, until the warning message
+   * will be presented.
    * </p>
    * <p>
-   * If {@link #isKeptAlive()} returns <tt>true</tt>, no message will be
+   * If {@link #isKeptAlive()} returns <tt>true</tt>, or given warning period is
+   * longer than the context's current session lifetime, no message will be
    * presented.
    * </p>
    * 
