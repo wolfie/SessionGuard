@@ -30,26 +30,26 @@ import com.vaadin.ui.AbstractComponent;
  */
 @com.vaadin.ui.ClientWidget(com.github.wolfie.sessionguard.client.ui.VSessionGuard.class)
 public class SessionGuard extends AbstractComponent {
-  
+
   private static final long serialVersionUID = -8232615940183467323L;
-  
+
   private int sessionTimeout = -2;
   private int timeoutWarningPeriodMinutes = 0;
-  private String timeoutWarningHTML = "It seems like you have been inactive for a while.<br/>"
+  private String timeoutWarningXHTML = "It seems like you have been inactive for a while.<br/>"
       + "Please note that your session will end in _ minutes, unless you do something.";
   private boolean keepalive = false;
-  
+
   @Override
   public void paintContent(final PaintTarget target) throws PaintException {
     target.addAttribute(VSessionGuard.A_TIMEOUT_SECS_INT, sessionTimeout);
     target.addAttribute(VSessionGuard.A_WARNING_PERIOD_MINS_INT,
         timeoutWarningPeriodMinutes);
     target.addAttribute(VSessionGuard.A_TIMEOUT_MSG_XHTML_STRING,
-        timeoutWarningHTML);
+        timeoutWarningXHTML);
     target.addAttribute(VSessionGuard.A_KEEPALIVE_BOOL, keepalive);
     target.addVariable(this, VSessionGuard.V_PING_BOOL, false);
   }
-  
+
   /**
    * {@inheritDoc}
    * 
@@ -60,10 +60,10 @@ public class SessionGuard extends AbstractComponent {
   @Override
   public void attach() {
     super.attach();
-    
+
     final Application application = getApplication();
     if (application != null) {
-      
+
       final ApplicationContext context = application.getContext();
       if (context instanceof WebApplicationContext) {
         final WebApplicationContext webContext = (WebApplicationContext) context;
@@ -76,11 +76,11 @@ public class SessionGuard extends AbstractComponent {
       }
     }
   }
-  
+
   public boolean isKeptAlive() {
     return keepalive;
   }
-  
+
   /**
    * <p>
    * Should the session be artificially kept alive by the {@link SessionGuard}.
@@ -103,7 +103,7 @@ public class SessionGuard extends AbstractComponent {
     keepalive = keepAlive;
     requestRepaint();
   }
-  
+
   /**
    * <p>
    * The amount of time left in the session lifetime, until the warning message
@@ -129,7 +129,7 @@ public class SessionGuard extends AbstractComponent {
           "'minutes' must be greater than zero");
     }
   }
-  
+
   /**
    * @return The amount of minutes before session timeout that the warning is
    *         displayed.
@@ -137,7 +137,7 @@ public class SessionGuard extends AbstractComponent {
   public int getTimeoutWarningPeriod() {
     return timeoutWarningPeriodMinutes;
   }
-  
+
   /**
    * <p>
    * Set a custom session timeout warning message
@@ -147,30 +147,30 @@ public class SessionGuard extends AbstractComponent {
    * presented.
    * </p>
    * 
-   * @param timeoutWarningHTML
+   * @param timeoutWarningXHTML
    *          The warning message in XHTML-format. Use the underscore character
    *          '_' as a placeholder for remaining minutes in the session.
    * @throws NullPointerException
    *           if <tt>timeoutWarningHTML</tt> is <tt>null</tt>
    */
-  public void setTimeoutWarningHTML(final String timeoutWarningHTML) {
-    if (timeoutWarningHTML == null) {
-      this.timeoutWarningHTML = timeoutWarningHTML;
+  public void setTimeoutWarningXHTML(final String timeoutWarningXHTML) {
+    if (timeoutWarningXHTML != null) {
+      this.timeoutWarningXHTML = timeoutWarningXHTML;
       requestRepaint();
     } else {
-      throw new NullPointerException("timeoutWarningHTML was null");
+      throw new NullPointerException("timeoutWarningXHTML was null");
     }
   }
-  
+
   /**
    * Get the currently used warning message
    * 
    * @return The current warning message in XHTML-format.
    */
-  public String getTimeoutWarningString() {
-    return timeoutWarningHTML;
+  public String getTimeoutWarningXHTML() {
+    return timeoutWarningXHTML;
   }
-  
+
   @Override
   public void changeVariables(final Object source,
       final Map<String, Object> variables) {
