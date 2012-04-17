@@ -37,7 +37,6 @@ public class SessionGuard extends AbstractComponent {
 		
 		@Override
 		public void ping() {
-			System.out.println("PING!");
 			clientRpc.pong();
 		}
 	};

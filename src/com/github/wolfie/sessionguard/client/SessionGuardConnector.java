@@ -3,7 +3,6 @@ package com.github.wolfie.sessionguard.client;
 import com.github.wolfie.sessionguard.SessionGuard;
 import com.github.wolfie.sessionguard.client.ui.VSessionGuard;
 import com.google.gwt.core.client.GWT;
-import com.vaadin.terminal.gwt.client.VConsole;
 import com.vaadin.terminal.gwt.client.communication.ClientRpc;
 import com.vaadin.terminal.gwt.client.communication.MethodInvocation;
 import com.vaadin.terminal.gwt.client.communication.StateChangeEvent;
@@ -29,7 +28,6 @@ public class SessionGuardConnector extends AbstractComponentConnector {
 			
 			@Override
 			public void pong() {
-				VConsole.log("*********************************** PONG!");
 				ping(false);
 				getWidget().updateTimer();
 			}
