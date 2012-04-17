@@ -2,9 +2,9 @@ Manifest-Version: 1.0
 Vaadin-License-Title: Apache 2.0
 Implementation-Vendor: Henrik Paul
 Implementation-Title: SessionGuard
-Implementation-Version: 0.0.5
+Implementation-Version: 0.0.5.7
 Vaadin-Package-Version: 1
-Class-Path: 
 Vaadin-Widgetsets: com.github.wolfie.sessionguard.SessionguardWidgetse
  t
+Class-Path: 
 
