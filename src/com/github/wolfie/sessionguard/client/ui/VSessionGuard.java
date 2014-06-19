@@ -32,6 +32,9 @@ public class VSessionGuard extends Widget implements Paintable {
 
   public static final String V_PING_BOOL = "ping";
 
+ /** A minute in milliseconds */
+  private static final int SECOND = 1000; 
+
   /** A minute in milliseconds */
   private static final int MINUTE = 60000; // legibility ftw
   private static final int MINUTES = MINUTE; // legibility ftw
@@ -90,7 +93,7 @@ public class VSessionGuard extends Widget implements Paintable {
               ping(true);
             }
           }
-        }.scheduleRepeating(MINUTE);
+        }.scheduleRepeating(SECOND);
 
       } else {
         // keepalive - ping!
@@ -165,14 +168,14 @@ public class VSessionGuard extends Widget implements Paintable {
   private void updateTimer() {
     if (!keepalive && 0 < timeoutMins && timeoutMins > warningPeriod) {
       // re-schedule the timeout
-      timer.schedule((timeoutMins - warningPeriod) * MINUTES);
+      timer.schedule((timeoutMins - warningPeriod) * SECOND);
     } else if (keepalive) {
       /*
        * always launch keepalive only half a minute before the session is to
        * end. Half a minute, since one minute is the shortest session, and we
        * don't to update all the time (i.e. 0 delay)
        */
-      timer.schedule(Long.valueOf(Math.round((timeoutMins - 0.5) * MINUTES))
+      timer.schedule(Long.valueOf(Math.round((timeoutMins - 0.5) * SECOND))
           .intValue());
     } else {
       // timeout was <= 0, which doesn't make sense, or timeout <=
